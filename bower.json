@@ -8,9 +8,9 @@
     "components"
   ],
   "dependencies": {
-    "angular": "~1.2.0rc1",
+    "angular": "~1.2.0-rc.1",
     "angular-mocks": "~1.2.0-rc.1",
     "underscore": "~1.5.1",
-    "angular-linkto": "latest"
+    "angular-linkto": "1.0.0"
   }
 }
