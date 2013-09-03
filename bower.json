@@ -1,0 +1,16 @@
+{
+  "name": "angular-models",
+  "version": "1.0.0",
+  "main": "dist/angular-models.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "angular": "~1.2.0rc1",
+    "angular-mocks": "~1.2.0-rc.1",
+    "underscore": "~1.5.1",
+    "angular-linkto": "latest"
+  }
+}
