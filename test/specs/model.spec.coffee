@@ -33,7 +33,7 @@ describe 'angular-models.Model', ->
 
     it 'saves internal state for lifecycle', ->
       model.setLifecycle 'awesome'
-      model.state.should.eql 'awesome'
+      model._state.should.eql 'awesome'
 
   describe 'AttributesMixin', ->
 

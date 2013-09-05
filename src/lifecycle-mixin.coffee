@@ -4,41 +4,41 @@ angular.module('angular-models').service 'LifecycleMixin',  ->
 
   # TODO: rename to @_state
   dependencies: ->
-    @state = null
+    @_state = null
 
   setLifecycle: (state, model = @) ->
-    model.state = state
+    model._state = state
 
   getLifecycle: (model = @) ->
-    model.state
+    model._state
 
   isLifecycle: (state, model = @)->
-    model.state is state
+    model._state is state
 
   # TODO: refactor this out or give a specialized name
   isEmpty: (model = @) ->
-    not model.state?
+    not model._state?
 
   isLoaded: (model = @) ->
-    model.state is 'loaded'
+    model._state is 'loaded'
 
   isDirty: (model = @) ->
-    model.state is 'dirty'
+    model._state is 'dirty'
 
   isSaving: (model = @) ->
-    model.state is 'saving'
+    model._state is 'saving'
 
   isFetching: (model = @) ->
-    model.state is 'fetching'
+    model._state is 'fetching'
 
   isDeleted: (model = @) ->
-    model.state is 'deleted'
+    model._state is 'deleted'
 
   isError: (model = @) ->
-    model.state is 'error'
+    model._state is 'error'
 
   isNew: (model = @) ->
-    model.state is 'new'
+    model._state is 'new'
 
   isValid: (model = @) ->
-    model.state is 'valid'
+    model._state is 'valid'

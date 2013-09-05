@@ -23,7 +23,7 @@ describe 'angular-models.LifecycleMixin', ->
     it 'sets state after dependencies() called', ->
       lc = LifecycleMixin
       lc.dependencies()
-      lc.should.have.property 'state'
+      lc.should.have.property '_state'
 
 
   describe 'Special states', ->
