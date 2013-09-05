@@ -1,6 +1,7 @@
 angular.module('angular-models').service 'AttributesMixin',  ->
 
   dependencies: ->
+    # TODO: rename _attributes
     @attributes = {}
 
   hasAttributes: ->

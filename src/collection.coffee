@@ -30,7 +30,6 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
     hasModels: ->
       @models?
 
-    # TODO: alias find()?
     # call with Model or json containing id
     get: (jsonOrModel) ->
       # TODO: consider caching model ids internally similar to Backbone.Collection._byId[]
@@ -40,6 +39,8 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
         modelIdMatches = jsonOrModel.hasAttributes?() and jsonOrModel.get('id')? and m.get('id')? and jsonOrModel.get('id') is m.get('id')
 
         isModel or idMatches or modelIdMatches
+
+    find: @::get #alias
 
     reset: (jsonModels) ->
       @models = []
