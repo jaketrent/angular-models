@@ -1,6 +1,5 @@
 angular.module('angular-models').service 'AttributesMixin',  ->
 
-  # TODO: rename _dependencies
   dependencies: ->
     @attributes = {}
 
@@ -37,8 +36,7 @@ angular.module('angular-models').service 'AttributesMixin',  ->
     else
       @attributes[key]
 
-  # TODO: rename getModels or something?
-  getAll: (key) ->
+  getModels: (key) ->
     if @attributes[key]?.hasModels?()
       @attributes[key].models
     else

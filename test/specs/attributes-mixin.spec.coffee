@@ -25,7 +25,7 @@ describe 'angular-models.AttributesMixin', ->
   it 'has an api', ->
     expect(AttributesMixin).to.have.property 'set'
     expect(AttributesMixin).to.have.property 'get'
-    expect(AttributesMixin).to.have.property 'getAll'
+    expect(AttributesMixin).to.have.property 'getModels'
     expect(AttributesMixin).to.have.property 'toJSON'
     expect(AttributesMixin).to.have.property 'hasAttributes'
 
@@ -243,9 +243,9 @@ describe 'angular-models.AttributesMixin', ->
 
           model.toJSON().should.eql expectedJson
 
-  describe '#getAll', ->
+  describe '#getModels', ->
 
     it 'returns models if hasModels', ->
       json = [new TestModel { id: 1 }, new TestModel { id: 2 }]
       model.set 'manyThings', new Collection json
-      model.getAll('manyThings').should.eql json
+      model.getModels('manyThings').should.eql json
