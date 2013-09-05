@@ -1,16 +1,15 @@
 angular.module('angular-models').service 'AttributesMixin',  ->
 
   dependencies: ->
-    # TODO: rename _attributes
-    @attributes = {}
+    @_attributes = {}
 
   hasAttributes: ->
-    @attributes?
+    @_attributes?
 
   set: (key, val) ->
     if @_isMultilevelString key
       keys = key.split /\./
-      obj = @_crawlObjects @attributes, keys
+      obj = @_crawlObjects @_attributes, keys
       if obj.hasAttributes?()
         obj.set keys[keys.length - 1], val
       else
@@ -22,30 +21,30 @@ angular.module('angular-models').service 'AttributesMixin',  ->
       else
         (attrs = {})[key] = val
 
-      @attributes[attr] = val for attr, val of attrs
+      @_attributes[attr] = val for attr, val of attrs
 
     @
 
   get: (key) ->
     if @_isMultilevelString key
       keys = key.split /\./
-      obj = @_crawlObjects @attributes, keys
+      obj = @_crawlObjects @_attributes, keys
       if obj.hasAttributes?()
         obj.get keys[keys.length - 1]
       else
         obj[keys[keys.length - 1]]
     else
-      @attributes[key]
+      @_attributes[key]
 
   getModels: (key) ->
-    if @attributes[key]?.hasModels?()
-      @attributes[key].models
+    if @_attributes[key]?.hasModels?()
+      @_attributes[key].models
     else
       @get key
 
   toJSON: ->
     json = {}
-    for attr, val of @attributes
+    for attr, val of @_attributes
       if _.isArray val
         json[attr] = []
         for arrVal in val

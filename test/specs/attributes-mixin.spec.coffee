@@ -14,8 +14,8 @@ describe 'angular-models.AttributesMixin', ->
 
     class TestModel extends Module
       @include AttributesMixin
-      constructor: ->
-        @attributes = {} # must be in constructor if used by mixin
+      constructor: (data) ->
+        super data
 
     model = new TestModel
 
@@ -38,7 +38,7 @@ describe 'angular-models.AttributesMixin', ->
     it 'sets attributes after dependencies() is called', ->
       mixin = AttributesMixin
       mixin.dependencies()
-      mixin.should.have.property 'attributes'
+      mixin.should.have.property '_attributes'
 
   describe '#get and #set', ->
 

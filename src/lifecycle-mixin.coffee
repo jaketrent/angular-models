@@ -2,7 +2,6 @@
 # Note: Do not bind to this with =>, because will be mixing in to a new object
 angular.module('angular-models').service 'LifecycleMixin',  ->
 
-  # TODO: rename to @_state
   dependencies: ->
     @_state = null
 

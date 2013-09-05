@@ -109,7 +109,7 @@ describe 'angular-models.Model', ->
       it 'saves data fetched onto attributes', ->
         model.fetch()
         $httpBackend.flush()
-        model.attributes.awesome.should.eql 'sauce'
+        model._attributes.awesome.should.eql 'sauce'
 
       it 'sets lifecycle state to loaded on success', ->
         model.fetch()
