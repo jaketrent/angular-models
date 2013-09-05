@@ -137,3 +137,36 @@ describe 'angular-models.Collection', ->
     it 'has a method to test that it is a collection', ->
       collection.should.have.property 'hasModels'
 
+  describe '#eq', ->
+
+    it 'will return model at given index', ->
+      collection = new Collection
+      model1 = new Model
+      model2 = new Model
+      collection.add model1
+      collection.add model2
+      collection.eq(0).should.eql model1
+      collection.eq(1).should.eql model2
+
+  describe '#first', ->
+
+    it 'will always return the first model', ->
+      collection = new Collection
+      model1 = new Model
+      model2 = new Model
+      collection.add model1
+      collection.first().should.eql model1
+      collection.add model2
+      collection.first().should.eql model1
+
+  describe '#last', ->
+
+    it 'will always return the last model', ->
+      collection = new Collection
+      model1 = new Model
+      model2 = new Model
+      collection.add model1
+      collection.last().should.eql model1
+      collection.add model2
+      collection.last().should.eql model2
+
