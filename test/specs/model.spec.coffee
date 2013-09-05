@@ -21,7 +21,7 @@ describe 'angular-models.Model', ->
       model.should.have.property 'setLifecycle'
       model.should.have.property 'getLifecycle'
       model.should.have.property 'isLifecycle'
-      model.should.have.property 'isEmpty'
+      model.should.have.property 'hasLifecycle'
       model.should.have.property 'isLoaded'
       model.should.have.property 'isDirty'
       model.should.have.property 'isSaving'

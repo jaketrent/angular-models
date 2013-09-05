@@ -14,9 +14,8 @@ angular.module('angular-models').service 'LifecycleMixin',  ->
   isLifecycle: (state, model = @)->
     model._state is state
 
-  # TODO: refactor this out or give a specialized name
-  isEmpty: (model = @) ->
-    not model._state?
+  hasLifecycle: (model = @) ->
+    @getLifecycle(model)?
 
   isLoaded: (model = @) ->
     model._state is 'loaded'

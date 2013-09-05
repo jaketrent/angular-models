@@ -33,7 +33,7 @@ describe 'angular-models.LifecycleMixin', ->
       lc = LifecycleMixin
 
     it 'is empty without state', ->
-      lc.isEmpty().should.be.true
+      lc.hasLifecycle().should.be.false
 
     it 'checks for loaded', ->
       lc.isLoaded().should.be.false
