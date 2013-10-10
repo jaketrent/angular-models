@@ -1,18 +1,17 @@
-angular.module 'angular-models', ['angular-linkto']
+angular.module 'angular-models', ['angular-linkto', 'angular-lifecycle']
 
 angular.module('angular-models').service 'AttributesMixin',  ->
 
-  # TODO: rename _dependencies
   dependencies: ->
-    @attributes = {}
+    @_attributes = {}
 
   hasAttributes: ->
-    @attributes?
+    @_attributes?
 
   set: (key, val) ->
     if @_isMultilevelString key
       keys = key.split /\./
-      obj = @_crawlObjects @attributes, keys
+      obj = @_crawlObjects @_attributes, keys
       if obj.hasAttributes?()
         obj.set keys[keys.length - 1], val
       else
@@ -24,31 +23,30 @@ angular.module('angular-models').service 'AttributesMixin',  ->
       else
         (attrs = {})[key] = val
 
-      @attributes[attr] = val for attr, val of attrs
+      @_attributes[attr] = val for attr, val of attrs
 
     @
 
   get: (key) ->
     if @_isMultilevelString key
       keys = key.split /\./
-      obj = @_crawlObjects @attributes, keys
+      obj = @_crawlObjects @_attributes, keys
       if obj.hasAttributes?()
         obj.get keys[keys.length - 1]
       else
         obj[keys[keys.length - 1]]
     else
-      @attributes[key]
+      @_attributes[key]
 
-  # TODO: rename getModels or something?
-  getAll: (key) ->
-    if @attributes[key]?.hasModels?()
-      @attributes[key].models
+  getModels: (key) ->
+    if @_attributes[key]?.hasModels?()
+      @_attributes[key].models
     else
       @get key
 
   toJSON: ->
     json = {}
-    for attr, val of @attributes
+    for attr, val of @_attributes
       if _.isArray val
         json[attr] = []
         for arrVal in val
@@ -116,7 +114,6 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
     hasModels: ->
       @models?
 
-    # TODO: alias find()?
     # call with Model or json containing id
     get: (jsonOrModel) ->
       # TODO: consider caching model ids internally similar to Backbone.Collection._byId[]
@@ -126,6 +123,8 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
         modelIdMatches = jsonOrModel.hasAttributes?() and jsonOrModel.get('id')? and m.get('id')? and jsonOrModel.get('id') is m.get('id')
 
         isModel or idMatches or modelIdMatches
+
+    find: @::get #alias
 
     reset: (jsonModels) ->
       @models = []
@@ -148,56 +147,11 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
       @models[@models.length - 1]
 
   Collection
-# follows http://emberjs.com/guides/models/model-lifecycle/
-# Note: Do not bind to this with =>, because will be mixing in to a new object
-angular.module('angular-models').service 'LifecycleMixin',  ->
-
-  # TODO: rename to @_state
-  dependencies: ->
-    @state = null
-
-  setLifecycle: (state, model = @) ->
-    model.state = state
-
-  getLifecycle: (model = @) ->
-    model.state
-
-  isLifecycle: (state, model = @)->
-    model.state is state
-
-  # TODO: refactor this out or give a specialized name
-  isEmpty: (model = @) ->
-    not model.state?
-
-  isLoaded: (model = @) ->
-    model.state is 'loaded'
-
-  isDirty: (model = @) ->
-    model.state is 'dirty'
-
-  isSaving: (model = @) ->
-    model.state is 'saving'
-
-  isFetching: (model = @) ->
-    model.state is 'fetching'
-
-  isDeleted: (model = @) ->
-    model.state is 'deleted'
-
-  isError: (model = @) ->
-    model.state is 'error'
-
-  isNew: (model = @) ->
-    model.state is 'new'
-
-  isValid: (model = @) ->
-    model.state is 'valid'
-
-angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, LifecycleMixin, AttributesMixin) ->
+angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, Lifecycle, AttributesMixin) ->
 
   class Model extends Module
     @include NameMixin
-    @include LifecycleMixin
+    @include Lifecycle
     @include AttributesMixin
 
     constructor: (data) ->
@@ -280,6 +234,7 @@ angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, M
       $filter('linkTo')(urlWithRoot, @)
 
   Model
+
 # based on http:#arcturo.github.io/library/coffeescript/03_classes.html
 angular.module('angular-models').factory 'Module', ->
 
