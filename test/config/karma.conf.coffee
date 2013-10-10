@@ -18,6 +18,7 @@ module.exports = (config) ->
       'components/angular/angular.js',
       'components/underscore/underscore.js',
       'components/angular-linkto/dist/angular-linkto.js',
+      'components/angular-lifecycle/dist/angular-lifecycle.js',
 
       # test helpers
       'components/angular-mocks/angular-mocks.js',

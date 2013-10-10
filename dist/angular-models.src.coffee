@@ -1,4 +1,4 @@
-angular.module 'angular-models', ['angular-linkto']
+angular.module 'angular-models', ['angular-linkto', 'angular-lifecycle']
 
 angular.module('angular-models').service 'AttributesMixin',  ->
 
@@ -147,54 +147,11 @@ angular.module('angular-models').factory 'Collection', ($rootScope, Module, Mode
       @models[@models.length - 1]
 
   Collection
-# follows http://emberjs.com/guides/models/model-lifecycle/
-# Note: Do not bind to this with =>, because will be mixing in to a new object
-angular.module('angular-models').service 'LifecycleMixin',  ->
-
-  dependencies: ->
-    @_state = null
-
-  setLifecycle: (state, model = @) ->
-    model._state = state
-
-  getLifecycle: (model = @) ->
-    model._state
-
-  isLifecycle: (state, model = @)->
-    model._state is state
-
-  hasLifecycle: (model = @) ->
-    @getLifecycle(model)?
-
-  isLoaded: (model = @) ->
-    model._state is 'loaded'
-
-  isDirty: (model = @) ->
-    model._state is 'dirty'
-
-  isSaving: (model = @) ->
-    model._state is 'saving'
-
-  isFetching: (model = @) ->
-    model._state is 'fetching'
-
-  isDeleted: (model = @) ->
-    model._state is 'deleted'
-
-  isError: (model = @) ->
-    model._state is 'error'
-
-  isNew: (model = @) ->
-    model._state is 'new'
-
-  isValid: (model = @) ->
-    model._state is 'valid'
-
-angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, LifecycleMixin, AttributesMixin) ->
+angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, Lifecycle, AttributesMixin) ->
 
   class Model extends Module
     @include NameMixin
-    @include LifecycleMixin
+    @include Lifecycle
     @include AttributesMixin
 
     constructor: (data) ->
@@ -277,6 +234,7 @@ angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, M
       $filter('linkTo')(urlWithRoot, @)
 
   Model
+
 # based on http:#arcturo.github.io/library/coffeescript/03_classes.html
 angular.module('angular-models').factory 'Module', ->
 

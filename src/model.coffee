@@ -1,8 +1,8 @@
-angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, LifecycleMixin, AttributesMixin) ->
+angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, Module, NameMixin, Lifecycle, AttributesMixin) ->
 
   class Model extends Module
     @include NameMixin
-    @include LifecycleMixin
+    @include Lifecycle
     @include AttributesMixin
 
     constructor: (data) ->
