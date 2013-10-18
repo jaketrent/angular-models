@@ -14,7 +14,7 @@ angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, M
         if _.isString data
           @url = data
         else
-          @deserialize data
+          @set data
 
     fetch: =>
       success = (data) =>
