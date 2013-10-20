@@ -29,8 +29,9 @@ angular.module('angular-models').factory 'Model', ($rootScope, $http, $filter, M
         $rootScope.$broadcast "#{_.result @, 'name'}:fetched", @
         $rootScope.$broadcast "#{_.result @, 'name'}:fetched:error", @
 
+      method = if @_getUrl()?.indexOf('callback=JSON_CALLBACK') > -1 then 'jsonp' else 'get'
       @setLifecycle 'fetching'
-      $http.get(@_getUrl()).success(success).error(error)
+      $http[method](@_getUrl()).success(success).error(error)
 
     save: =>
       success = (data) =>

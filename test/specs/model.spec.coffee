@@ -84,16 +84,14 @@ describe 'angular-models.Model', ->
   describe '#fetch', ->
     url = null
 
-    beforeEach ->
-      url = 'awesome'
-      model.url = url
-
     describe 'Success', ->
 
       modelJson =
         awesome: 'sauce'
 
       beforeEach ->
+        url = 'awesome'
+        model.url = url
         $httpBackend.expectGET(url).respond 200, modelJson
 
       it 'does an http get to the url string', ->
@@ -141,6 +139,8 @@ describe 'angular-models.Model', ->
         lame: 'stuff'
 
       beforeEach ->
+        url = 'awesome'
+        model.url = url
         $httpBackend.expectGET(url).respond 422, errorJson
 
       it 'saves errors in fetching onto errors', ->
@@ -165,6 +165,25 @@ describe 'angular-models.Model', ->
         model.fetch()
         $httpBackend.flush()
         spy.should.have.been.calledWith 'model:fetched:error', model
+
+    describe 'Jsonp', ->
+
+      modelJson =
+        awesome: 'sauce'
+
+      beforeEach ->
+        url = 'awesome?callback=JSON_CALLBACK'
+        model.url = url
+        $httpBackend.expectJSONP(url).respond 200, modelJson
+
+      it 'does an http get via jsonp to the url function', ->
+        model.fetch()
+        $httpBackend.flush()
+
+      it 'saves data fetched onto attributes', ->
+        model.fetch()
+        $httpBackend.flush()
+        model._attributes.awesome.should.eql 'sauce'
 
   describe '#deserialize', ->
 
