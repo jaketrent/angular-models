@@ -1,6 +1,6 @@
 {
   "name": "angular-models",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -10,7 +10,7 @@
     "angular": "1.2.0-rc.1",
     "angular-mocks": "1.2.0-rc.1",
     "underscore": "1.5.1",
-    "angular-linkto": "1.0.2",
+    "angular-linkto": "~1.1.0",
     "angular-lifecycle": "~1.0.0"
   }
 }
